@@ -4,12 +4,10 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\{HomeController,
                         BookController,
                         PeminjamanController,
-                        KelasController,
                         PenerbitController,
                         RakController,
                         PengembalianController,
                         AnggotaController,
-                        KategoriKelasController
                         };
 /*
 |--------------------------------------------------------------------------
@@ -24,8 +22,6 @@ use App\Http\Controllers\{HomeController,
 Auth::routes();
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
-Route::resource('class',KelasController::class);
-Route::resource('kategori-kelas',KategoriKelasController::class, ['only' => ['index','create','store','destroy']]);
 Route::resource('books',BookController::class);
 Route::resource('anggotas',AnggotaController::class);
 Route::resource('peminjaman',PeminjamanController::class);

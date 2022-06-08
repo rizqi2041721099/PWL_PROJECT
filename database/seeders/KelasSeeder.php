@@ -14,49 +14,18 @@ class KelasSeeder extends Seeder
      */
     public function run()
     {
-        $data = [
+        $kelas = [
             [
-               'kategori_id' => 1,
-               'name'       => 'X'
+                'name'  => 'X'
             ],
             [
-                'kategori_id' => 2,
-                'name'       => 'X'
+                'name' => 'XI'
             ],
             [
-                'kategori_id' => 3,
-                'name'       => 'X'
-            ],
-            [
-                'kategori_id' => 4,
-                'name'       => 'X'
-            ],
-            [
-                'kategori_id' => 5,
-                'name'       => 'X'
-            ],
-            [
-                'kategori_id' => 1,
-                'name'       => 'XI'
-            ],
-            [
-                'kategori_id' => 2,
-                'name'       => 'XI'
-            ],
-            [
-                'kategori_id' => 3,
-                'name'       => 'XI'
-            ],
-            [
-                'kategori_id' => 4,
-                'name'       => 'XI'
-            ],
-            [
-                'kategori_id' => 5,
-                'name'       => 'XI'
+                'name' => 'XII'
             ],
         ];
 
-        Kelas::insert($data);
+        Kelas::insert($kelas);
     }
 }

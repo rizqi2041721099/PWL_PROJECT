@@ -22,10 +22,25 @@
         <div class="card-body">
             <form action="{{route('raks.store')}}" method="POST">
                 @csrf
-                <div class="form-group">
-                    <label for="exampleInputEmail1">Nama Rak</label>
-                    <input type="text" name="name" class="form-control text-uppercase" placeholder="Contoh Rak Novel 1">
+                <div class="row">
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Nama Rak</label>
+                            <input type="text" name="name" class="form-control" placeholder="Contoh Rak Novel 1">
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label>Buku</label>
+                            <select class="form-control lg" name="book_id">
+                                @foreach ($book as $item)
+                                    <option value="{{$item->id}}">{{$item->judul}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
                 </div>
+
                 <button type="submit" class="btn btn-primary">Simpan</button>
             </form>
         </div>

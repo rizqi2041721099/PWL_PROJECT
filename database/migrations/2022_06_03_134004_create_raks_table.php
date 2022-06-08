@@ -15,6 +15,7 @@ class CreateRaksTable extends Migration
     {
         Schema::create('raks', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('book_id')->references('id')->on('books');
             $table->string('name',20);
             $table->timestamps();
         });

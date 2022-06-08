@@ -39,8 +39,6 @@
                 <a class="collapse-item" href="{{ route('raks.index') }}">Rak</a>
                 <a class="collapse-item" href="{{ route('books.index') }}">Buku</a>
                 <a class="collapse-item" href="{{ route('penerbit.index') }}">Penerbit</a>
-                <a class="collapse-item" href="{{ route('class.index') }}">Kelas</a>
-                <a class="collapse-item" href="{{ route('kategori-kelas.index') }}">Kategori Kelas</a>
                 <a class="collapse-item" href="{{ route('anggotas.index') }}">Anggota</a>
             </div>
         </div>

@@ -19,10 +19,16 @@ class KategoriKelasSeeder extends Seeder
                 'category'  => 'A'
             ],
             [
-                'categories' => 'B'
+                'category' => 'B'
             ],
             [
-                'categories' => 'C'
+                'category' => 'C'
+            ],
+            [
+                'category' => 'D'
+            ],
+            [
+                'category' => 'E'
             ],
         ];
 
