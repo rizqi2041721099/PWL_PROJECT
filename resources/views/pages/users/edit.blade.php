@@ -29,7 +29,7 @@
                     <div class="col-6">
                         <div class="form-group">
                           <label>Nama</label>
-                          <input type="text" name="name" class="form-control" value="{{ $user->name }}" placeholder="Contoh Erlangga">
+                          <input type="text" name="name" class="form-control" value="{{ $user->name }}" placeholder="Masukkan nama!">
                         </div>
                     </div>
                     <div class="col-6">
