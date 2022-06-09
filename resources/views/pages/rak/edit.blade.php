@@ -24,9 +24,25 @@
         <form action="{{route('raks.update',$data->id)}}" method="POST">
             @csrf
             @method('PUT')
-            <div class="form-group">
-              <label for="exampleInputEmail1">Nama Rak</label>
-              <input type="text" name="name" value="{{$data->name}}" class="form-control" placeholder="Contoh Rak Novel 1">
+            <div class="row">
+                <div class="col-6">
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Nama Rak</label>
+                        <input type="text" name="name" class="form-control" value="{{ $data->name }}" placeholder="Contoh Rak Novel 1">
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="form-group">
+                        <label>Buku</label>
+                        <select class="form-control" name="book_id">
+                            @foreach ($book as $books)
+                            <option value="{{$books->id}}" {{ $books->id == $data->book_id ? 'selected' : '' }}>{{$books->judul}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                </div>
+            </div>
+
             <button type="submit" class="btn btn-primary mt-4">Update</button>
           </form>
     </div>

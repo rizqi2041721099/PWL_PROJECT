@@ -7,21 +7,23 @@ use Illuminate\Http\Request;
 
 class PenerbitController extends Controller
 {
-    
+
     public function index()
     {
+        $page = 'master';
         $data = Penerbit::all();
 
-        return view('pages.penerbit.index', compact('data'));
+        return view('pages.penerbit.index', compact('data','page'));
     }
 
-  
+
     public function create()
     {
-        return view('pages.penerbit.create');
+        $page = 'master';
+        return view('pages.penerbit.create',compact('page'));
     }
 
-   
+
     public function store(Request $request)
     {
         $request->validate([
@@ -33,15 +35,16 @@ class PenerbitController extends Controller
 
         return redirect()->route('penerbit.index')->with('success', 'Penerbit Berhasil Ditambahkan');
     }
- 
+
     public function edit($id)
     {
+        $page = 'master';
         $data = Penerbit::findOrFail($id);
 
-        return view('pages.penerbit.edit', compact('data'));
+        return view('pages.penerbit.edit', compact('data','page'));
     }
 
-  
+
     public function update(Request $request, $id)
     {
         $request->validate([
@@ -49,17 +52,16 @@ class PenerbitController extends Controller
         ]);
 
         $penerbit = Penerbit::findOrFail($id);
-        $data     = $request->all();  
+        $data     = $request->all();
         $penerbit->update($data);
 
         return redirect()->route('penerbit.index')->with('success', 'Penerbit Berhasil Diupdate');
-
     }
 
-    
+
     public function destroy($id)
     {
-        $data = Penerbit::findOrFail($id)->delete(); 
-        return redirect()->route('penerbit.index')->with('delete','Delete Data Penerbit  Berhasil');
+        $data = Penerbit::findOrFail($id)->delete();
+        return back()->with('delete','Delete Data Penerbit  Berhasil');
     }
 }

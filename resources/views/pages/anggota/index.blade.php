@@ -3,7 +3,7 @@
 <div class="container-fluid">
 
    <!-- Page Heading -->
-   <h1 class="h3 mb-2 text-gray-800">Data Kelas</h1>
+   <h1 class="h3 mb-2 text-gray-800">Data Anggota</h1>
    <!-- DataTales Example -->
    <div class="card shadow mb-4">
        <div class="card-header py-3">
@@ -11,7 +11,7 @@
             <span class="icon text-white-50">
                 <i class="fas fa-plus"></i>
             </span>
-            <span class="text">Tambah Kelas</span>
+            <span class="text">Tambah Anggota</span>
         </a>
         @if(session('success'))
             <div class="alert alert-success alert-dismissible mt-4" role="alert">
@@ -36,6 +36,7 @@
                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                    <thead>
                        <tr>
+                        <th>No</th>
                         <th>Nama</th>
                         <th>No Hp</th>
                         <th>Alamat</th>
@@ -44,6 +45,7 @@
                    </thead>
                    <tfoot>
                        <tr>
+                        <th>No</th>
                         <th>Nama</th>
                         <th>No Hp</th>
                         <th>Alamat</th>
@@ -53,6 +55,7 @@
                    <tbody>
                        @foreach($data as $datas)
                        <tr>
+                           <td>{{ $loop->iteration }}</td>
                            <td>{{ $datas->name }}</td>
                            <td>{{$datas->telephone}}</td>
                            <td>{{$datas->alamat}}</td>

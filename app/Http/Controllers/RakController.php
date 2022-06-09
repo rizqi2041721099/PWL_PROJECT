@@ -10,15 +10,17 @@ class RakController extends Controller
 
     public function index()
     {
+        $page = 'master';
         $data = Rak::join('books','books.id','raks.book_id')
-                    ->get(['books.*','books.judul']);
-        return view('pages.rak.index', compact('data'));
+                    ->get(['raks.*','books.judul']);
+        return view('pages.rak.index', compact('data','page'));
     }
 
     public function create()
     {
+        $page = 'mater';
         $book = Book::all();
-        return view('pages.rak.create',compact('book'));
+        return view('pages.rak.create',compact('book','master'));
     }
 
 
@@ -32,7 +34,7 @@ class RakController extends Controller
         $data = $request->all();
         $raks = Rak::create($data);
 
-        return redirect()->route('raks.index')->with('success', 'Rak Berhasil Ditambahkan');
+        return redirect()->route('raks.index')->with('success', "Data $raks->name Berhasil Ditambahkan");
     }
 
 
@@ -44,9 +46,10 @@ class RakController extends Controller
 
     public function edit($id)
     {
+        $page = 'master';
+        $book = Book::all();
         $data = Rak::findOrFail($id);
-
-        return view('pages.rak.edit',cmpact('data'));
+        return view('pages.rak.edit',compact('data','book','page'));
     }
 
     public function update(Request $request, $id)
@@ -60,13 +63,20 @@ class RakController extends Controller
         $data = $request->all();
         $raks->update($data);
 
-        return redirect()->route('raks.index')->with('success', 'Rak Berhasil Ditambahkan');
+        return redirect()->route('raks.index')->with('success', "Data Rak $raks->name Berhasil Update");
     }
 
 
     public function destroy($id)
     {
         $data = Rak::findOrFail($id);
-        return redirect()->route('raks.index')->with('success', 'Rak Berhasil Dihapus');
+        $books = Book::findOrFail($data->book_id);
+        // dd($books->stock);
+        if ($books->stock == 0) {
+            $data->delete();
+            return back()->with('success', 'Rak Berhasil Dihapus');
+        } else {
+            return back()->with('danger', 'Stok buku masih ada!');
+        }
     }
 }

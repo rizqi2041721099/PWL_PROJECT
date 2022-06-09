@@ -10,15 +10,17 @@ class AnggotaController extends Controller
 
     public function index()
     {
+        $page = 'master';
         $data = Anggota::all();
-        return view('pages.anggota.index',compact('data'));
+        return view('pages.anggota.index',compact('data','page'));
     }
 
     public function create()
     {
+        $page = 'master';
         $kelas = Kelas::all();
         $ketegori = KategoriKelas::all();
-        return view('pages.anggota.create',compact('kelas','ketegori'));
+        return view('pages.anggota.create',compact('kelas','ketegori','page'));
     }
 
 
@@ -47,11 +49,12 @@ class AnggotaController extends Controller
 
     public function edit($id)
     {
-        $kelas = Kelas::all();
-        $ketegori = KategoriKelas::all();
-        $data = Anggota::findOrFail($id);
+        $page       = 'master';
+        $kelas      = Kelas::all();
+        $ketegori   = KategoriKelas::all();
+        $data       = Anggota::findOrFail($id);
 
-        return view('pages.anggota.edit',compact('kelas','ketegori','data'));
+        return view('pages.anggota.edit',compact('kelas','ketegori','data','page'));
     }
 
     public function update(Request $request, $id)
@@ -75,6 +78,6 @@ class AnggotaController extends Controller
     public function destroy($id)
     {
         $data = Anggota::findOrfail($id)->delete();
-        return redirect()->route('anggotas.index')->with('delete','Anggota Berhasil Dihapus');
+        return back()->with('delete','Anggota Berhasil Dihapus');
     }
 }

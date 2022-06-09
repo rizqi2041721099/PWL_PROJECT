@@ -24,9 +24,10 @@ class HomeController extends Controller
      */
     public function index()
     {
+        $page = 'home';
         $books     = Book::count();
         $peminjaman  = Peminjaman::count();
         $penerbit   = Penerbit::count();
-        return view('pages.home.index', compact('books','peminjaman','penerbit'));
+        return view('pages.home.index', compact('books','peminjaman','penerbit','page'));
     }
 }

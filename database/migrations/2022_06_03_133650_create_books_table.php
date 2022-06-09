@@ -16,8 +16,8 @@ class CreateBooksTable extends Migration
         Schema::create('books', function (Blueprint $table) {
             $table->id();
             $table->foreignId('penerbit_id')->references('id')->on('penerbits');
-            $table->string('sampul');
-            $table->string('judul',20);
+            $table->string('sampul')->nullable();
+            $table->string('judul',30);
             $table->string('penulis',30);
             $table->integer('tahun_terbit');
             $table->integer('stock');

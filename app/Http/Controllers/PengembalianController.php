@@ -35,7 +35,7 @@ class PengembalianController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
     }
 
     /**

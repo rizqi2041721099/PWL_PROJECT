@@ -36,12 +36,14 @@
                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                    <thead>
                        <tr>
+                        <th>No</th>
                         <th>Name</th>
                         <th>Action</th>
                        </tr>
                    </thead>
                    <tfoot>
                        <tr>
+                        <th>No</th>
                         <th>Name</th>
                         <th>Action</th>
                        </tr>
@@ -49,6 +51,7 @@
                    <tbody>
                        @foreach($data as $item)
                        <tr>
+                           <td>{{ $loop->iteration }}</td>
                            <td>{{$item->name}}</td>
                            <td>
                             <a class="btn btn-primary" href="{{ route('penerbit.edit',$item->id) }}"><i class="fas fa-edit"></i></a>
