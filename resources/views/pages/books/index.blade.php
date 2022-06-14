@@ -74,14 +74,14 @@
                            </td>
                            <td>
                             @can('books-edit')
-                                <a class="btn btn-primary" href="{{ route('books.edit',$item->id) }}"><i class="fas fa-edit"></i></a>
+                                <a class="btn btn-primary" href="{{ route('books.edit',$item->id) }}"><i class="fas fa-edit" title="Edit"></i></a>
                             @endcan
-                            <a class="btn btn-info" href="{{ route('books.show',$item->id) }}"><i class="fas fa-eye"></i></a>
+                            <a class="btn btn-info" href="{{ route('books.show',$item->id) }}"><i class="fas fa-eye" title="Detail"></i></a>
                             @can('books-delete')
                                 <form action="{{route('books.destroy',$item->id)}}" method="post" class="d-inline">
                                     @method('delete')
                                     @csrf
-                                    <button type="submit" onclick="return confirm('are you sure?')" class="btn btn-danger rounded" on>
+                                    <button type="submit" title="Delete" onclick="return confirm('are you sure?')" class="btn btn-danger rounded" on>
                                         <span><i class="fas fa-trash"></i></span>
                                 </form>
                             @endcan

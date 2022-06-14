@@ -5,12 +5,14 @@
    <!-- Page Heading -->
    <h1 class="h3 mb-2 text-gray-800">Show Detail Buku</h1>
     </div>
-    <div class="row">
+    <div class="row ml-2">
         <div class="col-6">
-            <div class="card">
+            <div class="card" syle="height: 20vh; width: 20vw">
                 <div class="card-body">
-                    <h5>Buku</h5>
-                    <img src="{{ url('storage/images/books/'.$data->sampul) }}" style="height: 35vh; width: 30vw;">
+                    <div class="col-4">
+                        <h5>Buku</h5>
+                        <img src="{{ url('storage/images/books/'.$data->sampul) }}" class="d-flex justify-content-center" style="height: auto; width: auto;">
+                    </div>
                 </div>
             </div>
         </div>
