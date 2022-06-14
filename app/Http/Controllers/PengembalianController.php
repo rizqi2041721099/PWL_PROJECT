@@ -7,11 +7,15 @@ use Illuminate\Http\Request;
 
 class PengembalianController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
+    function __construct()
+    {
+         $this->middleware('permission:pengembalian-list|pengembalian-create|pengembalian-edit|pengembalian-delete', ['only' => ['index','store']]);
+         $this->middleware('permission:pengembalian-create', ['only' => ['create','store']]);
+         $this->middleware('permission:pengembalian-edit', ['only' => ['edit','update']]);
+         $this->middleware('permission:pengembalian-delete', ['only' => ['destroy']]);
+    }
+
     public function index()
     {
         //

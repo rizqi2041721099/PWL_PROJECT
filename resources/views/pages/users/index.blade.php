@@ -7,12 +7,14 @@
    <!-- DataTales Example -->
    <div class="card shadow mb-4">
        <div class="card-header py-3">
-        <a href="{{route('users.create')}}" class="btn btn-success btn-icon-split">
-            <span class="icon text-white-50">
-                <i class="fas fa-plus"></i>
-            </span>
-            <span class="text">Tambah User</span>
-        </a>
+        @can('user.create')
+            <a href="{{route('users.create')}}" class="btn btn-success btn-icon-split">
+                <span class="icon text-white-50">
+                    <i class="fas fa-plus"></i>
+                </span>
+                <span class="text">Tambah User</span>
+            </a>
+        @endcan
         @if(session('success'))
             <div class="alert alert-success alert-dismissible mt-4" role="alert">
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -57,14 +59,17 @@
                            <td>{{ $item->name }}</td>
                            <td>{{ $item->email }}</td>
                            <td>
-                            <a class="btn btn-primary" href="{{ route('users.edit',$item->id) }}"><i class="fas fa-edit"></i></a>
-
-                            <form action="{{route('users.destroy',$item->id)}}" method="post" class="d-inline">
-                                @method('delete')
-                                  @csrf
-                                <button type="submit" onclick="return confirm('are you sure?')" class="btn btn-danger rounded" on>
-                                    <span><i class="fas fa-trash"></i></span>
-                              </form>
+                            @can('user-edit')
+                                <a class="btn btn-primary" href="{{ route('users.edit',$item->id) }}"><i class="fas fa-edit"></i></a>
+                            @endcan
+                            @can('user-delete')
+                                <form action="{{route('users.destroy',$item->id)}}" method="post" class="d-inline">
+                                    @method('delete')
+                                    @csrf
+                                    <button type="submit" onclick="return confirm('are you sure?')" class="btn btn-danger rounded" on>
+                                        <span><i class="fas fa-trash"></i></span>
+                                </form>
+                            @endcan
                            </td>
                        </tr>
                        @endforeach

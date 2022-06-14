@@ -7,12 +7,14 @@
    <!-- DataTales Example -->
    <div class="card shadow mb-4">
        <div class="card-header py-3">
-        <a href="{{route('books.create')}}" class="btn btn-success btn-icon-split">
-            <span class="icon text-white-50">
-                <i class="fas fa-plus"></i>
-            </span>
-            <span class="text">Tambah Buku</span>
-        </a>
+        @can('books-create')
+            <a href="{{route('books.create')}}" class="btn btn-success btn-icon-split">
+                <span class="icon text-white-50">
+                    <i class="fas fa-plus"></i>
+                </span>
+                <span class="text">Tambah Buku</span>
+            </a>
+        @endcan
         @if(session('success'))
             <div class="alert alert-success alert-dismissible mt-4" role="alert">
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -46,6 +48,7 @@
                        <tr>
                         <th>No</th>
                         <th>Judul</th>
+                        <th class="text-center">Sampul</th>
                         <th>Action</th>
                        </tr>
                    </thead>
@@ -53,6 +56,7 @@
                        <tr>
                         <th>No</th>
                         <th>Judul</th>
+                        <th class="text-center">Sampul</th>
                         <th>Action</th>
                        </tr>
                    </tfoot>
@@ -61,15 +65,26 @@
                        <tr>
                            <td>{{ $loop->iteration }}</td>
                            <td>{{$item->judul}}</td>
+                           <td class="text-center">
+                                @if ($item->sampul == '')
+                                    <img src="{{ asset('assets/img/imagePlaceholder.png') }}" style="height: 100px; width: 100px;">
+                                     @else
+                                    <img src="{{ url('storage/images/books/'.$item->sampul) }}" class="text-center" style="height: 100px; width: 100px;">
+                                @endif
+                           </td>
                            <td>
-                            <a class="btn btn-primary" href="{{ route('books.edit',$item->id) }}"><i class="fas fa-edit"></i></a>
-
-                            <form action="{{route('books.destroy',$item->id)}}" method="post" class="d-inline">
-                                @method('delete')
-                                  @csrf
-                                <button type="submit" onclick="return confirm('are you sure?')" class="btn btn-danger rounded" on>
-                                    <span><i class="fas fa-trash"></i></span>
-                              </form>
+                            @can('books-edit')
+                                <a class="btn btn-primary" href="{{ route('books.edit',$item->id) }}"><i class="fas fa-edit"></i></a>
+                            @endcan
+                            <a class="btn btn-info" href="{{ route('books.show',$item->id) }}"><i class="fas fa-eye"></i></a>
+                            @can('books-delete')
+                                <form action="{{route('books.destroy',$item->id)}}" method="post" class="d-inline">
+                                    @method('delete')
+                                    @csrf
+                                    <button type="submit" onclick="return confirm('are you sure?')" class="btn btn-danger rounded" on>
+                                        <span><i class="fas fa-trash"></i></span>
+                                </form>
+                            @endcan
                            </td>
                        </tr>
                        @endforeach

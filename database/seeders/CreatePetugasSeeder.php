@@ -20,20 +20,31 @@ class CreatePetugasSeeder extends Seeder
         ]);
 
         $role = Role::where('name', 'PETUGAS')->first();
-        $permissions = Permission::pluck('id','id')->all();
-        $role->syncPermissions($permissions);
-        $petugas->assignRole([$role->id]);
-
-        /* =========================================================================================== */
-        $petugas = User::create([
-            'name'  => 'Risky',
-            'email' => 'risky@gmail.com',
-            'password'  => Hash::make('risky123')
+        $role->givePermissionTo([
+            'peminjaman-list',
+            'peminjaman-create',
+            'peminjaman-edit',
+            'peminjaman-delete',
+            'pengembalian-list',
+            'pengembalian-show',
+            'pengembalian-create',
+            'menu-transactions',
+            'menu-dashboard'
         ]);
 
-        $role = Role::where('name', 'PETUGAS')->first();
-        $permissions = Permission::pluck('id','id')->all();
-        $role->syncPermissions($permissions);
         $petugas->assignRole([$role->id]);
+
+        // $role = Role::where('name', 'ANGGOTA')->first();
+        // $role->syncPermissions($permissions);
+        // $anggota->assignRole([$role->id]);
+
+        // $role = Role::findByName('PETUGAS')->givePermissionTo('peminjaman-list');
+
+        // $petugas->assignRole($permission);
+        // foreach ($petugasPermission as $permission)
+        // {
+        //     $petugas->givePermissionTo($permission);
+        // }
+
     }
 }

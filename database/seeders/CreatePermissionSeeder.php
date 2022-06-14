@@ -28,12 +28,12 @@ class CreatePermissionSeeder extends Seeder
             'penerbit-delete',
             'peminjaman-list',
             'peminjaman-create',
+            'peminjaman-show',
             'peminjaman-edit',
             'peminjaman-delete',
             'pengembalian-list',
             'pengembalian-create',
-            'pengembalian-edit',
-            'pengembalian-delete',
+            'pengembalian-show',
             'anggota-list',
             'anggota-create',
             'anggota-edit',
@@ -42,6 +42,10 @@ class CreatePermissionSeeder extends Seeder
             'user-create',
             'user-edit',
             'user-delete',
+            'menu-dashboard',
+            'menu-users',
+            'menu-master',
+            'menu-transactions',
          ];
 
          foreach ($permissions as $permission) {

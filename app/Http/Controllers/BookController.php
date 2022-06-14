@@ -7,15 +7,31 @@ use Illuminate\Http\Request;
 use DB;
 use Image;
 use Illuminate\Support\Facades\Storage;
+use Auth;
 
 class BookController extends Controller
 {
+    function __construct()
+    {
+         $this->middleware('permission:book-list|book-create|book-edit|book-delete', ['only' => ['index','store']]);
+         $this->middleware('permission:book-create', ['only' => ['create','store']]);
+         $this->middleware('permission:book-edit', ['only' => ['edit','update']]);
+         $this->middleware('permission:book-delete', ['only' => ['destroy']]);
+    }
 
     public function index()
     {
+        if(Auth::user()->hasRole('ADMIN')){
+            $data = Book::join('penerbits','penerbits.id','books.penerbit_id')
+                            ->get(['books.*','penerbits.name as penerbit']);
+        }
+        else if (Auth::user()->hasRole('PETUGAS'))
+        {
+            $data = Book::join('penerbits','penerbits.id','books.penerbit_id')
+                            ->get(['books.*','penerbits.name as penerbit']);
+        }
+
         $page = 'master';
-        $data = Book::join('penerbits','penerbits.id','books.penerbit_id')
-                        ->get(['books.*','penerbits.name as penerbit']);
         return view('pages.books.index',compact('data','page'));
     }
 
@@ -35,7 +51,8 @@ class BookController extends Controller
             'judul'         => 'required|unique:books,judul|min:4|max:20',
             'penulis'       => 'required',
             'tahun_terbit'  => 'required',
-            'stock'         => 'required'
+            'stock'         => 'required',
+            'harga'         => 'required'
         ]);
 
         $data = $request->all();
@@ -50,15 +67,25 @@ class BookController extends Controller
             $data['sampul'] = $file_name;
         }
 
-        $books = Book::create($data);
+        $books = Book::create([
+            'penerbit_id'   => $data['penerbit_id'],
+            'sampul'        => $data['sampul'],
+            'judul'         => $data['judul'],
+            'penulis'       => $data['penulis'],
+            'tahun_terbit'  => $data['tahun_terbit'],
+            'stock'         => $data['stock'],
+            'harga'         => (int)str_replace(',','',$data['harga']),
+        ]);
 
         return redirect()->route('books.index')->with('success', "Data $books->judul berhasil ditambahkan");
     }
 
 
-    public function show(Book $book)
+    public function show($id)
     {
-
+        $page = 'master';
+        $data = Book::findOrFail($id);
+        return view('pages.books.show',compact('data','page'));
     }
 
 
@@ -80,6 +107,7 @@ class BookController extends Controller
             'penulis'       => 'required',
             'tahun_terbit'  => 'required',
             'stock'         => 'required',
+            'harga'         => 'required'
         ]);
 
         $data = $request->all();
@@ -95,7 +123,15 @@ class BookController extends Controller
             $data['sampul'] = $file_name;
         }
 
-        $book->update($data);
+        $book->update([
+            'penerbit_id'   => $data['penerbit_id'],
+            'sampul'        => $data['sampul'],
+            'judul'         => $data['judul'],
+            'penulis'       => $data['penulis'],
+            'tahun_terbit'  => $data['tahun_terbit'],
+            'stock'         => $data['stock'],
+            'harga'         => (int)str_replace(',','',$data['harga']),
+        ]);
 
         return redirect()->route('books.index')->with('success', "Data $book->judul berhasil diupdate");
     }

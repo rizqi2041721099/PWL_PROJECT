@@ -49,7 +49,7 @@
                                         <div class="form-group">
                                             <input type="email" class="form-control form-control-user"
                                                 id="exampleInputEmail" name="email" aria-describedby="emailHelp" value="{{ old('name') }}"
-                                                placeholder="Enter Email Address...">
+                                                placeholder="Enter Email Address..." autofocus value="{{ old('email') }}">
 
                                             @error('email')
                                             <span class="text-danger small" role="alert">

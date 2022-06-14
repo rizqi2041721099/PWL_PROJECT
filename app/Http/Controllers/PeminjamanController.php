@@ -2,84 +2,124 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Peminjaman;
+use App\Models\{Peminjaman,Book,User};
 use Illuminate\Http\Request;
+use DB;
+use Auth;
 
 class PeminjamanController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
+    function __construct()
+    {
+         $this->middleware('permission:peminjaman-list|peminjaman-create|peminjaman-edit|peminjaman-delete', ['only' => ['index','store']]);
+         $this->middleware('permission:peminjaman-create', ['only' => ['create','store']]);
+         $this->middleware('permission:peminjaman-edit', ['only' => ['edit','update']]);
+         $this->middleware('permission:peminjaman-delete', ['only' => ['destroy']]);
+    }
+
     public function index()
     {
-        //
+        if(Auth::user()->hasRole('ADMIN')){
+            $data = Peminjaman::all();
+        }
+
+        $page = 'transactions';
+        return view('pages.peminjaman.index',compact('page','data'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function create()
     {
-
+        $page = 'transaction';
+        $books = Book::all();
+        $users = User::whereHas('roles',function($query){
+            $query->where('name','ANGGOTA');
+        })->get();
+        // dd($users);
+        return view('pages.peminjaman.create',compact('page','users','books'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+
     public function store(Request $request)
     {
+        $request->validate([
+            'user_id'                => 'required',
+            'book_id'                => 'required',
+            'stock'                  => 'required',
+            'tanggal_pinjam'         => 'required|date',
+        ]);
+        $data = $request->all();
+        $books = Book::where('id',$request->book_id)->select('stock')->first();
+        // dd($books);
+        // dd($books);
+
+        if ($books->stock == 0){
+            return redirect()->route('peminjaman.create')->with('error','Stok buku kosong!');
+        } elseif ( $request->stock > $books->stock){
+            return redirect()->route('peminjaman.create')->with('error',"Stok buku tidak cukup hanya tersedia $books->stock!");
+        } else  {
+            // $books->decrement('stock',1);
+            $books->stock = $books->stock - $request->stock;
+            $books->save();
+
+            Peminjaman::create([
+                'user_id'           => $data['user_id'],
+                'book_id'           => $data['book_id'],
+                'stock'             => $data['stock'],
+                'tanggal_pinjam'    => $data['tanggal_pinjam'],
+            ]);
+        }
+
+        return view('pages.peminjaman.index')->with('success', 'Peminjaman berhasil ditambahkan');
 
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Peminjaman  $peminjaman
-     * @return \Illuminate\Http\Response
-     */
     public function show(Peminjaman $peminjaman)
     {
-        //
+
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Peminjaman  $peminjaman
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Peminjaman $peminjaman)
+
+    public function edit($id)
     {
-        //
+        $page = 'transaction';
+        $data = Peminjaman::findOrFail($id);
+
+        return view('pages.peminjaman.edit',compact('page','data'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Peminjaman  $peminjaman
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Peminjaman $peminjaman)
+
+    public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'jumlah_kembali'                => 'required',
+            'tanggal_kembali'               => 'required|date',
+        ]);
+
+        $data = $request->all();
+        $denda = 0;
+        $peminjaman = Peminjaman::findOrFail($id);
+        $books = Book::where('id',$peminjaman->book_id)->first();
+        if($peminjaman->stock < $request->jumlah_kembali){
+            $denda = 1000 * ($peminjaman->stock - $request->jumlah_kembali);
+        }
+        $peminjaman->update([
+            'jumlah_kembali' => $data['jumlah_kembali'],
+            'denda' => $denda,
+            'status' => 2,
+            'tanggal_kembali' => $data['tanggal_kembali']
+        ]);
+
+        $books->stock = $books->stock + $data['jumlah_kembali'];
+        $books->save();
+
+        return redirect()->route('peminjaman.index')->with('success','Peminjaman selesai');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Peminjaman  $peminjaman
-     * @return \Illuminate\Http\Response
-     */
+
     public function destroy(Peminjaman $peminjaman)
     {
-        //
+
     }
 }

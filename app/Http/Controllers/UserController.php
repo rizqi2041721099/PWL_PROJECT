@@ -24,7 +24,7 @@ class UserController extends Controller
     public function create()
     {
         $page = 'users';
-        $roles = Role::pluck('id','name')->all();
+        $roles = Role::all();
         return view('pages.users.create',compact('roles','page'));
     }
 
@@ -61,8 +61,8 @@ class UserController extends Controller
     {
         $page = 'users';
         $user = User::findOrFail($id);
-        $roles = Role::pluck('id','name')->all();
-        $userRole = $user->roles->pluck('id','name')->all();
+        $roles = Role::all();
+        $userRole = $user->roles->first();
 
         return view('pages.users.edit',compact('page','user','roles','userRole'));
     }

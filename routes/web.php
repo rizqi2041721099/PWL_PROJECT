@@ -31,7 +31,7 @@ Route::resource('pengembalian',PengembalianController::class);
 Route::resource('penerbit',PenerbitController::class);
 Route::resource('raks',RakController::class);
 Route::resource('roles',RoleController::class);
-Route::resource('users',userController::class);
+Route::resource('users',UserController::class);
 
 
 

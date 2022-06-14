@@ -7,6 +7,13 @@ use Illuminate\Http\Request;
 
 class AnggotaController extends Controller
 {
+    function __construct()
+    {
+         $this->middleware('permission:anggota-list|anggota-create|anggota-edit|anggota-delete', ['only' => ['index','store']]);
+         $this->middleware('permission:anggota-create', ['only' => ['create','store']]);
+         $this->middleware('permission:anggota-edit', ['only' => ['edit','update']]);
+         $this->middleware('permission:anggota-delete', ['only' => ['destroy']]);
+    }
 
     public function index()
     {

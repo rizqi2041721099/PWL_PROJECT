@@ -17,7 +17,6 @@ class CreatePengembaliansTable extends Migration
             $table->id();
             $table->foreignId('book_id')->references('id')->on('books');
             $table->date('tanggal_pengembalian');
-            $table->decimal('denda',13,2);
             $table->timestamps();
         });
     }

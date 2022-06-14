@@ -7,6 +7,13 @@ use Illuminate\Http\Request;
 
 class RakController extends Controller
 {
+    function __construct()
+    {
+         $this->middleware('permission:raks-list|raks-create|raks-edit|raks-delete', ['only' => ['index','store']]);
+         $this->middleware('permission:raks-create', ['only' => ['create','store']]);
+         $this->middleware('permission:raks-edit', ['only' => ['edit','update']]);
+         $this->middleware('permission:raks-delete', ['only' => ['destroy']]);
+    }
 
     public function index()
     {
@@ -20,7 +27,7 @@ class RakController extends Controller
     {
         $page = 'mater';
         $book = Book::all();
-        return view('pages.rak.create',compact('book','master'));
+        return view('pages.rak.create',compact('book','page'));
     }
 
 

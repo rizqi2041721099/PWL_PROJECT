@@ -8,6 +8,13 @@ use Illuminate\Http\Request;
 class PenerbitController extends Controller
 {
 
+    function __construct()
+    {
+         $this->middleware('permission:penerbit-list|penerbit-create|penerbit-edit|penerbit-delete', ['only' => ['index','store']]);
+         $this->middleware('permission:penerbit-create', ['only' => ['create','store']]);
+         $this->middleware('permission:penerbit-edit', ['only' => ['edit','update']]);
+         $this->middleware('permission:penerbit-delete', ['only' => ['destroy']]);
+    }
     public function index()
     {
         $page = 'master';

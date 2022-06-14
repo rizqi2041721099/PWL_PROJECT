@@ -21,6 +21,7 @@ class CreateBooksTable extends Migration
             $table->string('penulis',30);
             $table->integer('tahun_terbit');
             $table->integer('stock');
+            $table->decimal('harga',14,2);
             $table->timestamps();
         });
     }

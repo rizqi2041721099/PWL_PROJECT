@@ -29,13 +29,13 @@
                     <div class="col-6">
                         <div class="form-group">
                           <label>Nama</label>
-                          <input type="text" name="name" class="form-control" placeholder="Masukkan nama!">
+                          <input type="text" name="name" class="form-control" placeholder="Masukkan nama!" value="{{ old('name') }}">
                         </div>
                     </div>
                     <div class="col-6">
                         <div class="form-group">
                             <label>Email</label>
-                            <input type="email" name="email" class="form-control" placeholder="Masukkan email anda!">
+                            <input type="email" name="email" class="form-control" placeholder="Masukkan email anda!" value="{{ old('email') }}">
                         </div>
                     </div>
                     <div class="col-6">

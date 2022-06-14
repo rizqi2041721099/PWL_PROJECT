@@ -3,16 +3,16 @@
 <div class="container-fluid">
 
    <!-- Page Heading -->
-   <h1 class="h3 mb-2 text-gray-800">Data Role</h1>
+   <h1 class="h3 mb-2 text-gray-800">Data Peminjaman</h1>
    <!-- DataTales Example -->
    <div class="card shadow mb-4">
        <div class="card-header py-3">
-        @can('role-create')
-            <a href="{{route('roles.create')}}" class="btn btn-success btn-icon-split">
+        @can('peminjaman-create')
+            <a href="{{route('peminjaman.create')}}" class="btn btn-success btn-icon-split">
                 <span class="icon text-white-50">
                     <i class="fas fa-plus"></i>
                 </span>
-                <span class="text">Tambah Role</span>
+                <span class="text">Tambah Peminjaman</span>
             </a>
         @endcan
         @if(session('success'))
@@ -38,32 +38,35 @@
                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                    <thead>
                        <tr>
-                        <th>Nama</th>
+                        <th>No</th>
+                        <th>Total</th>
                         <th>Action</th>
                        </tr>
                    </thead>
                    <tfoot>
                        <tr>
-                        <th>Nama</th>
+                        <th>No</th>
+                        <th>Total</th>
                         <th>Action</th>
                        </tr>
                    </tfoot>
                    <tbody>
-                       @foreach($roles as $item)
+                       @foreach($data as $item)
                        <tr>
-                           <td>{{$item->name}}</td>
+                           <td>{{ $loop->iteration }}</td>
+                           <td>{{$item->stock}}</td>
                            <td>
-                            @can('role-edit')
-                                <a class="btn btn-primary" href="{{ route('roles.edit',$item->id) }}"><i class="fas fa-edit"></i></a>
+                            @can('peminjaman-edit')
+                                <a class="btn btn-primary" href="{{ route('peminjaman.edit',$item->id) }}"><i class="fas fa-edit"></i></a>
                             @endcan
-                            @can('role-delete')
-                                <form action="{{route('roles.destroy',$item->id)}}" method="post" class="d-inline">
+                            @can('peminjaman-delete')
+                                <form action="{{route('peminjaman.destroy',$item->id)}}" method="post" class="d-inline">
                                     @method('delete')
                                     @csrf
                                     <button type="submit" onclick="return confirm('are you sure?')" class="btn btn-danger rounded" on>
                                         <span><i class="fas fa-trash"></i></span>
                                 </form>
-                            @endcan
+                              @endcan
                            </td>
                        </tr>
                        @endforeach
