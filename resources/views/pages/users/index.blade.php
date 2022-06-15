@@ -60,13 +60,13 @@
                            <td>{{ $item->email }}</td>
                            <td>
                             @can('user-edit')
-                                <a class="btn btn-primary" href="{{ route('users.edit',$item->id) }}"><i class="fas fa-edit"></i></a>
+                                <a class="btn btn-primary btn-sm" href="{{ route('users.edit',$item->id) }}"><i class="fas fa-edit"></i></a>
                             @endcan
                             @can('user-delete')
                                 <form action="{{route('users.destroy',$item->id)}}" method="post" class="d-inline">
                                     @method('delete')
                                     @csrf
-                                    <button type="submit" onclick="return confirm('are you sure?')" class="btn btn-danger rounded" on>
+                                    <button type="submit" onclick="return confirm('are you sure?')" class="btn btn-danger btn-sm rounded" on>
                                         <span><i class="fas fa-trash"></i></span>
                                 </form>
                             @endcan

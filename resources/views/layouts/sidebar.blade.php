@@ -90,9 +90,9 @@
                     @if (auth()->user()->can('peminjaman-list'))
                         <a class="collapse-item {{ request()->routeIs('peminjaman.index') ? 'active' : ''}}" href="{{ route('peminjaman.index') }}">Peminjaman</a>
                     @endif
-                    @if (auth()->user()->can('pengembalian-list'))
+                    {{-- @if (auth()->user()->can('pengembalian-list'))
                         <a class="collapse-item" href="{{ route('pengembalian.index') }}">Pengembalian</a>
-                    @endif
+                    @endif --}}
                 </div>
             </div>
         </li>

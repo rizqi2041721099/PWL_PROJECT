@@ -39,6 +39,10 @@
                    <thead>
                        <tr>
                         <th>No</th>
+                        <th>User</th>
+                        <th>Buku</th>
+                        <th>Tanggal Peminjaman</th>
+                        <th>Status</th>
                         <th>Total</th>
                         <th>Action</th>
                        </tr>
@@ -46,6 +50,10 @@
                    <tfoot>
                        <tr>
                         <th>No</th>
+                        <th>User</th>
+                        <th>Buku</th>
+                        <th>Tanggal Peminjaman</th>
+                        <th>Status</th>
                         <th>Total</th>
                         <th>Action</th>
                        </tr>
@@ -54,19 +62,29 @@
                        @foreach($data as $item)
                        <tr>
                            <td>{{ $loop->iteration }}</td>
-                           <td>{{$item->stock}}</td>
+                           <td>{{ $item->user }}</td>
+                           <td>{{ $item->book }}</td>
+                           <td>{{ $item->tanggal_pinjam }}</td>
+                           <td>
+                                @if($item->status == 1)
+                                    <span class="badge bg-primary text-white">sedang dipinjam</span>
+                                @else
+                                    <span class="badge bg-success text-white">selesai dikembalikan</span>
+                                @endif
+                           </td>
+                           <td>{{ $item->stock }}</td>
                            <td>
                             @can('peminjaman-edit')
-                                <a class="btn btn-primary" href="{{ route('peminjaman.edit',$item->id) }}"><i class="fas fa-edit"></i></a>
+                                <a class="btn btn-primary btn-sm" href="{{ route('peminjaman.edit',$item->id) }}"><i class="fas fa-edit"></i> Pengembalian</a>
                             @endcan
-                            @can('peminjaman-delete')
+                            {{-- @can('peminjaman-delete')
                                 <form action="{{route('peminjaman.destroy',$item->id)}}" method="post" class="d-inline">
                                     @method('delete')
                                     @csrf
                                     <button type="submit" onclick="return confirm('are you sure?')" class="btn btn-danger rounded" on>
                                         <span><i class="fas fa-trash"></i></span>
                                 </form>
-                              @endcan
+                              @endcan --}}
                            </td>
                        </tr>
                        @endforeach

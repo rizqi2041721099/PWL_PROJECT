@@ -20,10 +20,17 @@ class PeminjamanController extends Controller
 
     public function index()
     {
-        if(Auth::user()->hasRole('ADMIN')){
-            $data = Peminjaman::all();
+        if(Auth::user()->hasRole('ADMIN') || Auth::user()->hasRole('ADMIN')){
+            $data = Peminjaman::join('books','books.id','peminjamen.book_id')
+                                ->join('users','users.id','peminjamen.user_id')
+                                ->select('peminjamen.*','books.judul as book','users.name as user')->get();
         }
-
+        // else{
+        //     $data = Peminjaman::join('books','books.id','peminjamen.book_id')
+        //     ->join('users','users.id','peminjamen.user_id')
+        //     ->select('peminjamen.*','books.judul as book','users.name as user')->get();
+        // }
+        // dd($data);
         $page = 'transactions';
         return view('pages.peminjaman.index',compact('page','data'));
     }
@@ -36,7 +43,8 @@ class PeminjamanController extends Controller
         $users = User::whereHas('roles',function($query){
             $query->where('name','ANGGOTA');
         })->get();
-        // dd($users);
+        // $buku = Book::select('harga')->get();
+        // dd($buku);
         return view('pages.peminjaman.create',compact('page','users','books'));
     }
 
@@ -49,10 +57,9 @@ class PeminjamanController extends Controller
             'stock'                  => 'required',
             'tanggal_pinjam'         => 'required|date',
         ]);
+
         $data = $request->all();
         $books = Book::where('id',$request->book_id)->select('stock')->first();
-        // dd($books);
-        // dd($books);
 
         if ($books->stock == 0){
             return redirect()->route('peminjaman.create')->with('error','Stok buku kosong!');
@@ -60,7 +67,8 @@ class PeminjamanController extends Controller
             return redirect()->route('peminjaman.create')->with('error',"Stok buku tidak cukup hanya tersedia $books->stock!");
         } else  {
             // $books->decrement('stock',1);
-            $books->stock = $books->stock - $request->stock;
+            $books->stock =  $books->stock - $request->stock  ;
+            // dd($books);
             $books->save();
 
             Peminjaman::create([
@@ -71,7 +79,7 @@ class PeminjamanController extends Controller
             ]);
         }
 
-        return view('pages.peminjaman.index')->with('success', 'Peminjaman berhasil ditambahkan');
+        return redirect()->route('peminjaman.index')->with('success', 'Peminjaman berhasil ditambahkan');
 
     }
 
@@ -101,9 +109,12 @@ class PeminjamanController extends Controller
         $denda = 0;
         $peminjaman = Peminjaman::findOrFail($id);
         $books = Book::where('id',$peminjaman->book_id)->first();
+        // $harga = Book::where('id',$books->harga)->first();
+        // dd($harga);
         if($peminjaman->stock < $request->jumlah_kembali){
-            $denda = 1000 * ($peminjaman->stock - $request->jumlah_kembali);
+            $denda = 10000 * ($peminjaman->stock - $request->jumlah_kembali);
         }
+        dd($denda);
         $peminjaman->update([
             'jumlah_kembali' => $data['jumlah_kembali'],
             'denda' => $denda,

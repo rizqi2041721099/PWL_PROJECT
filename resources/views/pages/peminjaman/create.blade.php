@@ -6,7 +6,7 @@
    <h1 class="h3 mb-2 text-gray-800">Create Peminjaman</h1>
    <div class="card shadow mb-4">
     <div class="card-header py-3">
-        <a href="{{ route('penerbit.index') }}">
+        <a href="{{ route('peminjaman.index') }}">
             <i class="fas fa-arrow-circle-left"> Back</i>
 
         </a>
@@ -33,7 +33,7 @@
         <form action="{{route('peminjaman.store')}}" method="POST">
             @csrf
             <div class="row">
-                <div class="col-12 mb-2">
+                <div class="col-6 mb-3">
                     <label>User</label>
                     <select class="form-control lg" name="user_id">
                         @foreach ($users as $data)
@@ -41,7 +41,7 @@
                         @endforeach
                   </select>
                 </div>
-                <div class="col-6 mb-2">
+                <div class="col-6 mb-3">
                     <label>Buku</label>
                     <select class="form-control lg" name="book_id">
                         @foreach ($books as $data)
@@ -49,7 +49,7 @@
                         @endforeach
                   </select>
                 </div>
-                <div class="col-6 mb-2">
+                <div class="col-6">
                     <label>Total</label>
                     <input type="text" class="form-control" name="stock">
                 </div>

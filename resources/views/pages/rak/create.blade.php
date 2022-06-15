@@ -1,4 +1,9 @@
 @extends('layouts.app')
+<style>
+    *{
+        overflow: hidden;
+    }
+</style>
 @section('content')
 <div class="container-fluid">
     <h1 class="h3 mb-2 text-gray-800">Create Rak</h1>

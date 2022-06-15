@@ -54,7 +54,7 @@
                         <div class="form-group">
                         <label for="exampleInputEmail1" class="form-label">Role</label>
                             <select name="roles[]" class="form-control" aria-label="Default select example">
-                            <option selected>Pilih role guys</option>
+                            <option selected>----Pilih role---</option>
                             @foreach($roles as $data)
                             <option value="{{$data->name}}">{{$data->name}}</option>
                             @endforeach

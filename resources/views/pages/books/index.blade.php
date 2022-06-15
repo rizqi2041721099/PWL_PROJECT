@@ -49,6 +49,10 @@
                         <th>No</th>
                         <th>Judul</th>
                         <th class="text-center">Sampul</th>
+                        <th>Harga</th>
+                        <th>Penerbit</th>
+                        <th>Penulis</th>
+                        <th>Total</th>
                         <th>Action</th>
                        </tr>
                    </thead>
@@ -57,6 +61,10 @@
                         <th>No</th>
                         <th>Judul</th>
                         <th class="text-center">Sampul</th>
+                        <th>Harga</th>
+                        <th>Penerbit</th>
+                        <th>Penulis</th>
+                        <th>Total</th>
                         <th>Action</th>
                        </tr>
                    </tfoot>
@@ -72,16 +80,19 @@
                                     <img src="{{ url('storage/images/books/'.$item->sampul) }}" class="text-center" style="height: 100px; width: 100px;">
                                 @endif
                            </td>
+                           <td class="input-element">{{ $item->harga }}</td>
+                           <td>{{ $item->penerbit }}</td>
+                           <td>{{ $item->penulis }}</td>
+                           <td>{{ $item->stock }}</td>
                            <td>
                             @can('books-edit')
-                                <a class="btn btn-primary" href="{{ route('books.edit',$item->id) }}"><i class="fas fa-edit" title="Edit"></i></a>
+                                <a class="btn btn-primary btn-sm" href="{{ route('books.edit',$item->id) }}"><i class="fas fa-edit" title="Edit"></i></a>
                             @endcan
-                            <a class="btn btn-info" href="{{ route('books.show',$item->id) }}"><i class="fas fa-eye" title="Detail"></i></a>
                             @can('books-delete')
                                 <form action="{{route('books.destroy',$item->id)}}" method="post" class="d-inline">
                                     @method('delete')
                                     @csrf
-                                    <button type="submit" title="Delete" onclick="return confirm('are you sure?')" class="btn btn-danger rounded" on>
+                                    <button type="submit" title="Delete" onclick="return confirm('are you sure?')" class="btn btn-danger btn-sm rounded" on>
                                         <span><i class="fas fa-trash"></i></span>
                                 </form>
                             @endcan
@@ -95,4 +106,5 @@
    </div>
 
 </div>
+
 @endsection

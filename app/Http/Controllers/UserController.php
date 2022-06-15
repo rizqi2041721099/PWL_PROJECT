@@ -99,4 +99,5 @@ class UserController extends Controller
         $data = User::findOrFail($id)->delete();
         return back()->with('delete', 'User berhasil dihapus');
     }
+
 }

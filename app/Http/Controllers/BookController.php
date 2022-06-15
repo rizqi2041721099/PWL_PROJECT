@@ -25,7 +25,7 @@ class BookController extends Controller
             $data = Book::join('penerbits','penerbits.id','books.penerbit_id')
                             ->get(['books.*','penerbits.name as penerbit']);
         }
-        else if (Auth::user()->hasRole('PETUGAS'))
+        elseif (Auth::user()->hasRole('PETUGAS'))
         {
             $data = Book::join('penerbits','penerbits.id','books.penerbit_id')
                             ->get(['books.*','penerbits.name as penerbit']);
@@ -83,9 +83,9 @@ class BookController extends Controller
 
     public function show($id)
     {
-        $page = 'master';
-        $data = Book::findOrFail($id);
-        return view('pages.books.show',compact('data','page'));
+        // $page = 'master';
+        // $data = Book::findOrFail($id);
+        // return view('pages.books.show',compact('data','page'));
     }
 
 
