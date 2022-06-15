@@ -74,17 +74,11 @@
                            </td>
                            <td>{{ $item->stock }}</td>
                            <td>
+                            @if($item->status == 1)
                             @can('peminjaman-edit')
                                 <a class="btn btn-primary btn-sm" href="{{ route('peminjaman.edit',$item->id) }}"><i class="fas fa-edit"></i> Pengembalian</a>
                             @endcan
-                            {{-- @can('peminjaman-delete')
-                                <form action="{{route('peminjaman.destroy',$item->id)}}" method="post" class="d-inline">
-                                    @method('delete')
-                                    @csrf
-                                    <button type="submit" onclick="return confirm('are you sure?')" class="btn btn-danger rounded" on>
-                                        <span><i class="fas fa-trash"></i></span>
-                                </form>
-                              @endcan --}}
+                            @endif
                            </td>
                        </tr>
                        @endforeach

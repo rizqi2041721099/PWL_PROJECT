@@ -25,12 +25,12 @@ class PeminjamanController extends Controller
                                 ->join('users','users.id','peminjamen.user_id')
                                 ->select('peminjamen.*','books.judul as book','users.name as user')->get();
         }
-        // else{
-        //     $data = Peminjaman::join('books','books.id','peminjamen.book_id')
-        //     ->join('users','users.id','peminjamen.user_id')
-        //     ->select('peminjamen.*','books.judul as book','users.name as user')->get();
-        // }
-        // dd($data);
+        else{
+            $data = Peminjaman::join('books','books.id','peminjamen.book_id')
+            ->join('users','users.id','peminjamen.user_id')
+            ->where('user_id',Auth::user()->id)
+            ->select('peminjamen.*','books.judul as book','users.name as user','user_id')->get();
+        }
         $page = 'transactions';
         return view('pages.peminjaman.index',compact('page','data'));
     }
@@ -59,7 +59,7 @@ class PeminjamanController extends Controller
         ]);
 
         $data = $request->all();
-        $books = Book::where('id',$request->book_id)->select('stock')->first();
+        $books = Book::where('id',$request->book_id)->first();
 
         if ($books->stock == 0){
             return redirect()->route('peminjaman.create')->with('error','Stok buku kosong!');
@@ -68,8 +68,8 @@ class PeminjamanController extends Controller
         } else  {
             // $books->decrement('stock',1);
             $books->stock =  $books->stock - $request->stock  ;
-            // dd($books);
             $books->save();
+            // dd($books);
 
             Peminjaman::create([
                 'user_id'           => $data['user_id'],
@@ -111,10 +111,10 @@ class PeminjamanController extends Controller
         $books = Book::where('id',$peminjaman->book_id)->first();
         // $harga = Book::where('id',$books->harga)->first();
         // dd($harga);
-        if($peminjaman->stock < $request->jumlah_kembali){
-            $denda = 10000 * ($peminjaman->stock - $request->jumlah_kembali);
+        if($request->jumlah_kembali < $peminjaman->stock){
+            $denda = $books->harga * ($peminjaman->stock - $request->jumlah_kembali);
         }
-        dd($denda);
+        // dd($denda);
         $peminjaman->update([
             'jumlah_kembali' => $data['jumlah_kembali'],
             'denda' => $denda,
