@@ -8,6 +8,7 @@ use DB;
 use Image;
 use Illuminate\Support\Facades\Storage;
 use Auth;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class BookController extends Controller
 {
@@ -22,11 +23,6 @@ class BookController extends Controller
     public function index()
     {
         if(Auth::user()->hasRole('ADMIN')){
-            $data = Book::join('penerbits','penerbits.id','books.penerbit_id')
-                            ->get(['books.*','penerbits.name as penerbit']);
-        }
-        elseif (Auth::user()->hasRole('PETUGAS'))
-        {
             $data = Book::join('penerbits','penerbits.id','books.penerbit_id')
                             ->get(['books.*','penerbits.name as penerbit']);
         }
@@ -111,7 +107,7 @@ class BookController extends Controller
         ]);
 
         $data = $request->all();
-
+        // dd($data);
         if($request->hasFile('sampul')){
             $file = $request->file('sampul');
             Storage::delete('public/images/books/'.$book->sampul);
@@ -125,7 +121,7 @@ class BookController extends Controller
 
         $book->update([
             'penerbit_id'   => $data['penerbit_id'],
-            'sampul'        => $data['sampul'],
+            'sampul'        => $request->sampul ? $data['sampul'] : $book->sampul,
             'judul'         => $data['judul'],
             'penulis'       => $data['penulis'],
             'tahun_terbit'  => $data['tahun_terbit'],
@@ -148,5 +144,16 @@ class BookController extends Controller
         else {
             return back()->with('warning', "Buku tidak bisa dihapus karena stok masih ada!");
         }
+    }
+
+    public function exportPDF()
+    {
+        $page = 'master';
+        $data = Book::join('penerbits','penerbits.id','books.penerbit_id')
+                    ->get(['books.*','penerbits.name as penerbit']);
+                    // dd($data);
+        $pdf = PDF::loadview('pages.books.book_pdf',compact('data','page'));
+
+        return $pdf->stream('book.pdf');
     }
 }

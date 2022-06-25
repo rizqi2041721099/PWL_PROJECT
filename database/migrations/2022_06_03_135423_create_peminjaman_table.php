@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreatePeminjamenTable extends Migration
+class CreatePeminjamanTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreatePeminjamenTable extends Migration
      */
     public function up()
     {
-        Schema::create('peminjamen', function (Blueprint $table) {
+        Schema::create('peminjaman', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->references('id')->on('users');
             $table->foreignId('book_id')->references('id')->on('books');
@@ -34,6 +34,6 @@ class CreatePeminjamenTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('peminjamen');
+        Schema::dropIfExists('peminjaman');
     }
 }

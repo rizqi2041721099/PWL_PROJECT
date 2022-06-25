@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Pengembalian;
+use App\Models\Peminjaman;
 use Illuminate\Http\Request;
 
 class PengembalianController extends Controller
@@ -18,7 +18,14 @@ class PengembalianController extends Controller
 
     public function index()
     {
-        //
+        $page = 'transaction';
+        $data = Peminjaman::join('books','books.id','peminjaman.book_id')
+                            ->join('users','users.id','peminjaman.user_id')
+                            ->select('peminjaman.*','books.sampul as book','books.judul','users.name')
+                            ->where('status',2)
+                            ->get();
+        // dd($data);
+        return view('pages.pengembalian.index',compact('data','page'));
     }
 
     /**

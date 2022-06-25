@@ -7,7 +7,6 @@ use App\Http\Controllers\{HomeController,
                         PenerbitController,
                         RakController,
                         PengembalianController,
-                        AnggotaController,
                         RoleController,
                         UserController,
                         };
@@ -25,14 +24,13 @@ Auth::routes();
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::resource('books',BookController::class);
-Route::resource('anggotas',AnggotaController::class);
 Route::resource('peminjaman',PeminjamanController::class);
 Route::resource('pengembalian',PengembalianController::class);
 Route::resource('penerbit',PenerbitController::class);
 Route::resource('raks',RakController::class);
 Route::resource('roles',RoleController::class);
 Route::resource('users',UserController::class);
-
+Route::get('book-pdf',[BookController::class,'exportPDF']);
 
 
 

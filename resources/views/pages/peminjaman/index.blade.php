@@ -75,15 +75,19 @@
                            <td>{{ $item->stock }}</td>
                            <td>
                             @if($item->status == 1)
-                            @can('peminjaman-edit')
-                                <a class="btn btn-primary btn-sm" href="{{ route('peminjaman.edit',$item->id) }}"><i class="fas fa-edit"></i> Pengembalian</a>
-                            @endcan
+                                @can('peminjaman-edit')
+                                    <a class="btn btn-primary btn-sm" href="{{ route('peminjaman.edit',$item->id) }}"><i class="fas fa-edit"></i> Pengembalian</a>
+                                @endcan
                             @endif
+                            @can('peminjaman-show')
+                                <a class="btn btn-secondary btn-sm" href="{{ route('peminjaman.show',$item->id) }}"><i class="fas fa-eye"></i> Detail</a>
+                            @endcan
                            </td>
                        </tr>
                        @endforeach
                    </tbody>
                </table>
+               {{ $data->links() }}
            </div>
        </div>
    </div>

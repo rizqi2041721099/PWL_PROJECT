@@ -6,6 +6,7 @@ use App\Models\{Peminjaman,Book,User};
 use Illuminate\Http\Request;
 use DB;
 use Auth;
+use DataTables;
 
 class PeminjamanController extends Controller
 {
@@ -20,17 +21,19 @@ class PeminjamanController extends Controller
 
     public function index()
     {
-        if(Auth::user()->hasRole('ADMIN') || Auth::user()->hasRole('ADMIN')){
-            $data = Peminjaman::join('books','books.id','peminjamen.book_id')
-                                ->join('users','users.id','peminjamen.user_id')
-                                ->select('peminjamen.*','books.judul as book','users.name as user')->get();
+
+        if(Auth::user()->hasRole('ADMIN') || Auth::user()->hasRole('PETUGAS')){
+            $data = Peminjaman::join('books','books.id','peminjaman.book_id')
+                                ->join('users','users.id','peminjaman.user_id')
+                                ->select('peminjaman.*','books.judul as book','users.name as user')->get()->paginate(10);
         }
         else{
-            $data = Peminjaman::join('books','books.id','peminjamen.book_id')
-            ->join('users','users.id','peminjamen.user_id')
+            $data = Peminjaman::join('books','books.id','peminjaman.book_id')
+            ->join('users','users.id','peminjaman.user_id')
             ->where('user_id',Auth::user()->id)
-            ->select('peminjamen.*','books.judul as book','users.name as user','user_id')->get();
+            ->select('peminjaman.*','books.judul as book','users.name as user','user_id')->get();
         }
+
         $page = 'transactions';
         return view('pages.peminjaman.index',compact('page','data'));
     }
@@ -43,8 +46,6 @@ class PeminjamanController extends Controller
         $users = User::whereHas('roles',function($query){
             $query->where('name','ANGGOTA');
         })->get();
-        // $buku = Book::select('harga')->get();
-        // dd($buku);
         return view('pages.peminjaman.create',compact('page','users','books'));
     }
 
@@ -67,7 +68,7 @@ class PeminjamanController extends Controller
             return redirect()->route('peminjaman.create')->with('error',"Stok buku tidak cukup hanya tersedia $books->stock!");
         } else  {
             // $books->decrement('stock',1);
-            $books->stock =  $books->stock - $request->stock  ;
+            $books->stock =  $books->stock - $request->stock;
             $books->save();
             // dd($books);
 
@@ -83,9 +84,17 @@ class PeminjamanController extends Controller
 
     }
 
-    public function show(Peminjaman $peminjaman)
+    public function show($id)
     {
+        $page = 'transaction';
 
+        $data = Peminjaman::findOrFail($id)->join('books','books.id','peminjaman.book_id')
+                                           ->join('users','users.id','peminjaman.user_id')
+                                           ->select('peminjaman.*','books.sampul as book','books.judul','users.name')
+                                           ->where('peminjaman.id',$id)
+                                           ->first();
+        // dd($data);
+        return view('pages.peminjaman.show',compact('page','data'));
     }
 
 

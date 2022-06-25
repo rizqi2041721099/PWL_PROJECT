@@ -30,7 +30,6 @@ class CreatePermissionSeeder extends Seeder
             'peminjaman-create',
             'peminjaman-show',
             'peminjaman-edit',
-            'peminjaman-delete',
             'pengembalian-list',
             'pengembalian-create',
             'pengembalian-show',
