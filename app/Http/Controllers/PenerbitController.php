@@ -20,7 +20,7 @@ class PenerbitController extends Controller
     public function index(Request $request)
     {
         $page = 'master';
-        $data = Penerbit::all();
+        $data = Penerbit::latest()->get();
         return view('pages.penerbit.index', compact('data','page'));
     }
 
