@@ -24,7 +24,7 @@ class BookController extends Controller
     {
         if(Auth::user()->hasRole('ADMIN')){
             $data = Book::join('penerbits','penerbits.id','books.penerbit_id')
-                            ->get(['books.*','penerbits.name as penerbit']);
+                        ->latest()->get(['books.*','penerbits.name as penerbit']);
         }
 
         $page = 'master';

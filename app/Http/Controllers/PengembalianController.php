@@ -23,6 +23,7 @@ class PengembalianController extends Controller
                             ->join('users','users.id','peminjaman.user_id')
                             ->select('peminjaman.*','books.sampul as book','books.judul','users.name')
                             ->where('status',2)
+                            ->latest()
                             ->get();
         // dd($data);
         return view('pages.pengembalian.index',compact('data','page'));
