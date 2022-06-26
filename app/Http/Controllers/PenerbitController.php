@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Penerbit;
 use Illuminate\Http\Request;
+use DataTables;
+use Auth;
 
 class PenerbitController extends Controller
 {
@@ -15,11 +17,10 @@ class PenerbitController extends Controller
          $this->middleware('permission:penerbit-edit', ['only' => ['edit','update']]);
          $this->middleware('permission:penerbit-delete', ['only' => ['destroy']]);
     }
-    public function index()
+    public function index(Request $request)
     {
         $page = 'master';
         $data = Penerbit::all();
-
         return view('pages.penerbit.index', compact('data','page'));
     }
 

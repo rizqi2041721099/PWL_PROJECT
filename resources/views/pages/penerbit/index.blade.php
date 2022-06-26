@@ -31,47 +31,53 @@
                 </button>
                 <h6><i class="fas fa-trash"></i><b>  {{session('delete')}}</b></h6>
               </div>
-          @endif
+           @endif
+           @if(session('danger'))
+            <div class="alert alert-danger alert-dismissible mt-4" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+                <h6><i class="fas fa-trash"></i><b>  {{session('danger')}}</b></h6>
+              </div>
+           @endif
        </div>
        <div class="card-body">
            <div class="table-responsive">
                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                    <thead>
                        <tr>
-                        <th>No</th>
-                        <th>Name</th>
+                        <th>Nama</th>
                         <th>Action</th>
                        </tr>
                    </thead>
                    <tfoot>
                        <tr>
-                        <th>No</th>
-                        <th>Name</th>
+                        <th>Nama</th>
                         <th>Action</th>
                        </tr>
                    </tfoot>
                    <tbody>
                        @foreach($data as $item)
                        <tr>
-                           <td>{{ $loop->iteration }}</td>
                            <td>{{$item->name}}</td>
                            <td>
                             @can('penerbit-edit')
-                                <a class="btn btn-primary" href="{{ route('penerbit.edit',$item->id) }}"><i class="fas fa-edit"></i></a>
+                                <a class="btn btn-primary" href="{{ route('penerbit.edit',$item->id) }}" title="edit"><i class="fas fa-edit"></i></a>
                             @endcan
                             @can('penerbit-delete')
                                 <form action="{{route('penerbit.destroy',$item->id)}}" method="post" class="d-inline">
                                     @method('delete')
                                     @csrf
-                                    <button type="submit" onclick="return confirm('are you sure?')" class="btn btn-danger rounded" on>
+                                    <button type="submit" onclick="return confirm('are you sure?')" class="btn btn-danger rounded" title="delete">
                                         <span><i class="fas fa-trash"></i></span>
                                 </form>
-                              @endcan
+                            @endcan
                            </td>
                        </tr>
                        @endforeach
                    </tbody>
                </table>
+
            </div>
        </div>
    </div>

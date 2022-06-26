@@ -18,7 +18,7 @@
                         <div class="col mr-2">
                             <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
                                 Peminjaman</div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">43</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $peminjaman }}</div>
                         </div>
                         <div class="col-auto">
                             <i class="fas fa-calendar fa-2x text-gray-300"></i>
@@ -36,7 +36,7 @@
                         <div class="col mr-2">
                             <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
                                 Buku</div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">8</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $books }}</div>
                         </div>
                         <div class="col-auto">
                             <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
@@ -56,14 +56,7 @@
                             </div>
                             <div class="row no-gutters align-items-center">
                                 <div class="col-auto">
-                                    <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">50%</div>
-                                </div>
-                                <div class="col">
-                                    <div class="progress progress-sm mr-2">
-                                        <div class="progress-bar bg-info" role="progressbar"
-                                            style="width: 50%" aria-valuenow="50" aria-valuemin="0"
-                                            aria-valuemax="100"></div>
-                                    </div>
+                                    <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">{{ $pengembalian }}</div>
                                 </div>
                             </div>
                         </div>
@@ -83,7 +76,7 @@
                         <div class="col mr-2">
                             <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
                                 Denda</div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">30000</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800"> @currency($denda->denda)</div>
                         </div>
                         <div class="col-auto">
                             <i class="fas fa-comments fa-2x text-gray-300"></i>

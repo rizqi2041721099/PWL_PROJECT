@@ -24,27 +24,12 @@ class CreatePetugasSeeder extends Seeder
             'peminjaman-list',
             'peminjaman-create',
             'peminjaman-edit',
-            'peminjaman-delete',
             'pengembalian-list',
             'pengembalian-show',
-            'pengembalian-create',
             'menu-transactions',
             'menu-dashboard'
         ]);
 
         $petugas->assignRole([$role->id]);
-
-        // $role = Role::where('name', 'ANGGOTA')->first();
-        // $role->syncPermissions($permissions);
-        // $anggota->assignRole([$role->id]);
-
-        // $role = Role::findByName('PETUGAS')->givePermissionTo('peminjaman-list');
-
-        // $petugas->assignRole($permission);
-        // foreach ($petugasPermission as $permission)
-        // {
-        //     $petugas->givePermissionTo($permission);
-        // }
-
     }
 }

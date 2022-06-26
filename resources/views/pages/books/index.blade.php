@@ -15,6 +15,9 @@
                 <span class="text">Tambah Buku</span>
             </a>
         @endcan
+        <div class="float-right">
+            <a href="/book-pdf" class="btn btn-secondary">Export PDF</a>
+        </div>
         @if(session('success'))
             <div class="alert alert-success alert-dismissible mt-4" role="alert">
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
