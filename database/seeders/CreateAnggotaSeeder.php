@@ -22,8 +22,6 @@ class CreateAnggotaSeeder extends Seeder
         $role = Role::where('name', 'ANGGOTA')->first();
         $role->givePermissionTo([
             'peminjaman-list',
-            'peminjaman-create',
-            'pengembalian-create',
             'pengembalian-list',
             'menu-dashboard',
             'menu-transactions',
