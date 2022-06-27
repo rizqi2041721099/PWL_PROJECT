@@ -32,7 +32,7 @@ class RoleController extends Controller
     {
         $page = 'users';
         $permission = Permission::get();
-        return view('pages.roles.create',compact('users','permission'));
+        return view('pages.roles.create',compact('page','permission'));
     }
 
 
@@ -68,7 +68,7 @@ class RoleController extends Controller
             ->pluck('role_has_permissions.permission_id','role_has_permissions.permission_id')
             ->all();
 
-        return view('pages.roles.edit',compact('users','role','permission','rolePermissions'));
+        return view('pages.roles.edit',compact('page','role','permission','rolePermissions'));
     }
 
 
