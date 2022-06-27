@@ -24,8 +24,8 @@ class CreatePetugasSeeder extends Seeder
             'peminjaman-list',
             'peminjaman-create',
             'peminjaman-edit',
+            'peminjaman-show',
             'pengembalian-list',
-            'pengembalian-show',
             'menu-transactions',
             'menu-dashboard'
         ]);

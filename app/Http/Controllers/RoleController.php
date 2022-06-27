@@ -23,7 +23,7 @@ class RoleController extends Controller
     public function index(Request $request)
     {
         $page = 'users';
-        $roles = Role::orderBy('id','DESC')->paginate(5);
+        $roles = Role::latest()->get()->paginate(5);
         return view('pages.roles.index',compact('roles','page'));
     }
 
@@ -91,6 +91,6 @@ class RoleController extends Controller
     public function destroy($id)
     {
         DB::table("roles")->where('id',$id)->delete();
-        return back()->with('danger','Role berhasil dihapus');
+        return back()->with('delete','Role berhasil dihapus');
     }
 }
