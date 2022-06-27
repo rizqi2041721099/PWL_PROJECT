@@ -50,10 +50,10 @@ class UserController extends Controller
 
     public function show($id)
     {
-        $page = 'users';
-        $data = User::findOrFail($id);
+        // $page = 'users';
+        // $data = User::findOrFail($id);
 
-        return view('pages.users.show', compact('page', 'data'));
+        // return view('pages.users.show', compact('page', 'data'));
     }
 
 

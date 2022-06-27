@@ -25,6 +25,7 @@
     <div class="card-body">
         <form action="{{route('users.update', $user->id)}}" method="POST">
             @csrf
+            @method('PUT')
             <div class="row">
                     <div class="col-6">
                         <div class="form-group">

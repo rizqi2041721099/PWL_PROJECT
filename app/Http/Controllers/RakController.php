@@ -19,6 +19,7 @@ class RakController extends Controller
     {
         $page = 'master';
         $data = Rak::join('books','books.id','raks.book_id')
+                    ->latest()
                     ->get(['raks.*','books.judul']);
         return view('pages.rak.index', compact('data','page'));
     }

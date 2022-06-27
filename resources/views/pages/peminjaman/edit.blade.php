@@ -28,13 +28,13 @@
                 <div class="col-6">
                     <div class="form-group">
                       <label for="exampleInputEmail1">Jumlah Kembali</label>
-                      <input type="text" name="jumlah_kembali" class="form-control" value=0>
+                      <input type="text" name="jumlah_kembali" value="{{ old('jumlah_kembali')}}" class="form-control" value=0>
                     </div>
                 </div>
                 <div class="col-6">
                 <div class="form-group">
                     <label for="">Tanggal Pengembalian</label>
-                    <input type="date" name="tanggal_kembali" class="form-control  datepicker">
+                    <input type="date" name="tanggal_kembali" value="{{ old('tanggal_kembali') }}" data-date-format="dd/mm/yyyy" class="form-control" id="datepicker">
                 </div>
                 </div>
             </div>
@@ -46,7 +46,10 @@
 </div>
 
 <script>
-    $('.datepicker').datepicker();
+        $('#datepicker').datepicker({
+            format: 'dd/mm/yyyy'
+        });
+
 </script>
 <!-- /.container-fluid -->
 @endsection

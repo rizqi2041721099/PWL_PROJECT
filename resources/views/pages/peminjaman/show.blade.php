@@ -62,7 +62,7 @@
                     <div class="col-4">
                         <label class="font-weight-bold">Denda</label>
                         @if($data->denda)
-                            <p> @currency($data->denda)</p>
+                            <p>@currency($data->denda)</p>
                         @else
                             <p>Rp. 0</p>
                         @endif

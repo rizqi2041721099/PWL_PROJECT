@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use DB;
 use Auth;
 use DataTables;
+use Carbon\Carbon;
 
 class PeminjamanController extends Controller
 {
@@ -25,7 +26,7 @@ class PeminjamanController extends Controller
         if(Auth::user()->hasRole('ADMIN') || Auth::user()->hasRole('PETUGAS')){
             $data = Peminjaman::join('books','books.id','peminjaman.book_id')
                                 ->join('users','users.id','peminjaman.user_id')
-                                ->select('peminjaman.*','books.judul as book','users.name as user')->get()->paginate(10);
+                                ->select('peminjaman.*','books.judul as book','users.name as user')->latest()->get()->paginate(10);
         }
         else{
             $data = Peminjaman::join('books','books.id','peminjaman.book_id')
@@ -128,7 +129,7 @@ class PeminjamanController extends Controller
             'jumlah_kembali' => $data['jumlah_kembali'],
             'denda' => $denda,
             'status' => 2,
-            'tanggal_kembali' => $data['tanggal_kembali']
+            'tanggal_kembali' => ($data['tanggal_kembali'])
         ]);
 
         $books->stock = $books->stock + $data['jumlah_kembali'];

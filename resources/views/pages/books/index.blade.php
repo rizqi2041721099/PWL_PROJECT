@@ -83,7 +83,7 @@
                                     <img src="{{ url('storage/images/books/'.$item->sampul) }}" class="text-center" style="height: 100px; width: 100px;">
                                 @endif
                            </td>
-                           <td class="input-element">{{ $item->harga }}</td>
+                           <td class="input-element"> @currency($item->harga)</td>
                            <td>{{ $item->penerbit }}</td>
                            <td>{{ $item->penulis }}</td>
                            <td>{{ $item->stock }}</td>

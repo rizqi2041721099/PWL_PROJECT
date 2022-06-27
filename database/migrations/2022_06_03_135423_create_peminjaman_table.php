@@ -20,7 +20,7 @@ class CreatePeminjamanTable extends Migration
             $table->integer('stock');
             $table->integer('jumlah_kembali')->nullable();
             $table->enum('status',[1,2])->default(1);
-            $table->decimal('denda',14,2)->nullable();
+            $table->string('denda')->nullable();
             $table->date('tanggal_pinjam');
             $table->date('tanggal_kembali')->nullable();
             $table->timestamps();

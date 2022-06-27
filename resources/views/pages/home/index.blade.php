@@ -76,7 +76,11 @@
                         <div class="col mr-2">
                             <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
                                 Denda</div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800"> @currency($denda->denda)</div>
+                            @if($denda == '')
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">@currency($denda)</div>
+                            @else
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">@currency($denda->denda)</div>
+                            @endif
                         </div>
                         <div class="col-auto">
                             <i class="fas fa-comments fa-2x text-gray-300"></i>

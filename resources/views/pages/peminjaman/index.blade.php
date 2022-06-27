@@ -64,7 +64,7 @@
                            <td>{{ $loop->iteration }}</td>
                            <td>{{ $item->user }}</td>
                            <td>{{ $item->book }}</td>
-                           <td>{{ $item->tanggal_pinjam }}</td>
+                           <td>{{$item->tanggal_pinjam}}</td>
                            <td>
                                 @if($item->status == 1)
                                     <span class="badge bg-primary text-white">sedang dipinjam</span>
