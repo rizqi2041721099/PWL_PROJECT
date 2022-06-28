@@ -8,6 +8,7 @@ use DB;
 use Auth;
 use DataTables;
 use Carbon\Carbon;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class PeminjamanController extends Controller
 {
@@ -136,6 +137,22 @@ class PeminjamanController extends Controller
         $books->save();
 
         return redirect()->route('peminjaman.index')->with('success','Peminjaman selesai');
+    }
+
+    public function exportPdfPeminjaman()
+    {
+        $page = 'master';
+        if(Auth::user()->hasRole('ADMIN') || Auth::user()->hasRole('PETUGAS')){
+            $data = Peminjaman::join('books','books.id','peminjaman.book_id')
+                                ->join('users','users.id','peminjaman.user_id')
+                                ->where('status',1)
+                                ->select('peminjaman.*','books.judul as book','users.name as user')->get();
+            // dd($data);
+        }
+                    // dd($data);
+        $pdf = PDF::loadview('pages.peminjaman.exportPdf',compact('data','page'));
+
+        return $pdf->stream('peminjaman.pdf');
     }
 
 

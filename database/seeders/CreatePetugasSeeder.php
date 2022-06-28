@@ -27,7 +27,9 @@ class CreatePetugasSeeder extends Seeder
             'peminjaman-show',
             'pengembalian-list',
             'menu-transactions',
-            'menu-dashboard'
+            'menu-dashboard',
+            'peminjaman-pdf',
+            'pengembalian-pdf',
         ]);
 
         $petugas->assignRole([$role->id]);

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Peminjaman;
 use Illuminate\Http\Request;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class PengembalianController extends Controller
 {
@@ -29,11 +30,27 @@ class PengembalianController extends Controller
         return view('pages.pengembalian.index',compact('data','page'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
+    public function show($id)
+    {
+        // dd($peminjaman);
+        $page = 'transaction';
+        $data = Peminjaman::findOrFail($id)->join('books','books.id','peminjaman.book_id')
+                                           ->join('users','users.id','peminjaman.user_id')
+                                           ->select('peminjaman.*','books.sampul as book','books.judul','users.name')
+                                           ->where('peminjaman.id',$id)
+                                           ->where('status',2)
+                                           ->first();
+
+        // dd($data);
+        // return view('pages.pengembalian.exportPdf',compact('page','data'));
+        // dd($data);
+        $pdf = PDF::loadview('pages.pengembalian.exportPdf',compact('data','page'));
+
+        return $pdf->download('peminjaman.pdf');
+
+    }
+
     public function create()
     {
         //
@@ -50,16 +67,7 @@ class PengembalianController extends Controller
 
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Pengembalian  $pengembalian
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Pengembalian $pengembalian)
-    {
-        //
-    }
+
 
     /**
      * Show the form for editing the specified resource.
