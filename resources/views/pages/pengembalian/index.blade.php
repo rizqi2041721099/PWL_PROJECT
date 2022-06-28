@@ -22,6 +22,9 @@
                         <th>Total</th>
                         <th>Tanggal Pengembalian</th>
                         <th>Denda</th>
+                        @can('peminjaman-pdf')
+                            <th>Action</th>
+                        @endcan
                        </tr>
                    </thead>
                    <tfoot>
@@ -30,10 +33,13 @@
                         <th class="text-center">Sampul</th>
                         <th>Judul</th>
                         <th>User</th>
-                        <th>Tanggal Pengembalian</th>
+                        <th>Total Pengembalian</th>
                         <th>Total</th>
                         <th>Tanggal Pengembalian</th>
                         <th>Denda</th>
+                        @can('peminjaman-pdf')
+                            <th>Action</th>
+                        @endcan
                        </tr>
                    </tfoot>
                    <tbody>
@@ -53,6 +59,11 @@
                            <td>{{ $item->stock }}</td>
                            <td>{{ $item->tanggal_kembali }}</td>
                            <td>@currency($item->denda)</td>
+                           @can('peminjaman-pdf')
+                           <td>
+                                <a class="btn btn-secondary btn-sm" href="{{ route('pengembalian.show',$item->id) }}">Print</a>
+                            </td>
+                            @endcan
                        </tr>
                        @endforeach
                    </tbody>

@@ -39,6 +39,8 @@ class CreatePermissionSeeder extends Seeder
             'menu-users',
             'menu-master',
             'menu-transactions',
+            'peminjaman-pdf',
+            'pengembalian-pdf',
          ];
 
          foreach ($permissions as $permission) {

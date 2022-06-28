@@ -31,6 +31,9 @@ Route::resource('raks',RakController::class);
 Route::resource('roles',RoleController::class);
 Route::resource('users',UserController::class);
 Route::get('book-pdf',[BookController::class,'exportPDF']);
+Route::get('peminjaman-pdf',[PeminjamanController::class,'exportPdfPeminjaman']);
+
+
 
 
 

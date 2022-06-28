@@ -15,6 +15,11 @@
                 <span class="text">Tambah Peminjaman</span>
             </a>
         @endcan
+        @can('peminjaman-pdf')
+        <a href="/peminjaman-pdf" class="btn btn-secondary float-right">
+               Export Pdf
+        </a>
+        @endcan
         @if(session('success'))
             <div class="alert alert-success alert-dismissible mt-4" role="alert">
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -87,7 +92,6 @@
                        @endforeach
                    </tbody>
                </table>
-              
            </div>
        </div>
    </div>
