@@ -49,7 +49,9 @@
                         <th>Tanggal Peminjaman</th>
                         <th>Status</th>
                         <th>Total</th>
+                        @can('peminjaman-edit')
                         <th>Action</th>
+                        @endcan
                        </tr>
                    </thead>
                    <tfoot>
@@ -60,7 +62,9 @@
                         <th>Tanggal Peminjaman</th>
                         <th>Status</th>
                         <th>Total</th>
+                        @can('peminjaman-edit')
                         <th>Action</th>
+                        @endcan
                        </tr>
                    </tfoot>
                    <tbody>
@@ -78,16 +82,16 @@
                                 @endif
                            </td>
                            <td>{{ $item->stock }}</td>
+                           @can('peminjaman-edit')
                            <td>
                             @if($item->status == 1)
-                                @can('peminjaman-edit')
                                     <a class="btn btn-primary btn-sm" href="{{ route('peminjaman.edit',$item->id) }}"><i class="fas fa-edit"></i> Pengembalian</a>
-                                @endcan
-                            @endif
-                            @can('peminjaman-show')
-                                <a class="btn btn-secondary btn-sm" href="{{ route('peminjaman.show',$item->id) }}"><i class="fas fa-eye"></i> Detail</a>
+                             @endif
+                                    @can('peminjaman-show')
+                                    <a class="btn btn-secondary btn-sm" href="{{ route('peminjaman.show',$item->id) }}"><i class="fas fa-eye"></i> Detail</a>
+                                    @endcan
+                                </td>
                             @endcan
-                           </td>
                        </tr>
                        @endforeach
                    </tbody>
