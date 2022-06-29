@@ -16,14 +16,7 @@ class HomeController extends Controller
 
     public function index()
     {
-        if(Auth::user()->hasRole('ADMIN') || Auth::user()->hasRole('PETUGAS'))
-         {
-            $books        = Book::count();
-            $peminjaman   = Peminjaman::where('status',1)->count();
-            $denda        = Peminjaman::select('denda')->where('status',2)->first();
-            $pengembalian = Peminjaman::where('status',2)->count();
-
-        } elseif(Auth::user()->hasRole('ANGGOTA')) {
+        if(Auth::user()->hasRole('ANGGOTA')) {
             $books        = Book::count();
             $peminjaman   = Peminjaman::where('user_id',Auth::user()->id)->where('status',1)->count();
             $denda        = Peminjaman::select('denda')
@@ -32,7 +25,14 @@ class HomeController extends Controller
                                         ->first();
             $pengembalian = Peminjaman::where('status',2)->where('user_id',Auth::user()->id)->count();
         }
-
+        else
+         {
+            $books        = Book::count();
+            $peminjaman   = Peminjaman::where('status',1)->count();
+            $denda        = Peminjaman::select('denda')->where('status',2)->first();
+            $pengembalian = Peminjaman::where('status',2)->count();
+         }
+        // dd($books);
         $page = 'home';
         return view('pages.home.index', compact('books','peminjaman','page','denda','pengembalian'));
     }

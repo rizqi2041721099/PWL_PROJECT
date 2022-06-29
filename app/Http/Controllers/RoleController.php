@@ -23,7 +23,7 @@ class RoleController extends Controller
     public function index(Request $request)
     {
         $page = 'users';
-        $roles = Role::latest()->get()->paginate(5);
+        $roles = Role::get()->paginate(5);
         return view('pages.roles.index',compact('roles','page'));
     }
 
